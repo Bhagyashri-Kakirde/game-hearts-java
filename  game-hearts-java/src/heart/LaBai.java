@@ -25,7 +25,7 @@ public class LaBai extends JButton implements ActionListener {
     private ImageIcon up;
     private ImageIcon down;
     private boolean isUp;
-
+    
     public void mousedMove(int pX, int pY) {
         int x = this.getLocation().x;
         int y = this.getLocation().y;
@@ -51,6 +51,7 @@ public class LaBai extends JButton implements ActionListener {
         this.height = this.up.getIconHeight() + 2;
         this.setSize(this.width, this.height);
         this.addActionListener(this);
+        
         this.setContentAreaFilled(false);
        
     }

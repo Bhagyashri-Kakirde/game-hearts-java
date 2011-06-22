@@ -18,43 +18,63 @@ import javax.swing.border.*;
 public class BanChoi extends JFrame implements Observer, Runnable {
 
     private JLabel status;
-    private JLabel memA, memB, memC, memD;
     private Color bgColor;
     private JPanel mainPanel;
+    private NguoiChoi west;
+    private NguoiChoi north;
+    private NguoiChoi east;
+    private NguoiChoi you;
 
     public BanChoi() {
         status = new JLabel();
-        memA = new JLabel();
-        memB = new JLabel();
-        memC = new JLabel();;
-        memD = new JLabel();
         bgColor = new Color(40, 100, 15);
         mainPanel = new JPanel(null);
+        west = new NguoiChoi();
+        north = new NguoiChoi();
+        east = new NguoiChoi();
+        you = new NguoiChoi();
+    }
+
+    protected void chiaBai() {
+        ArrayList<Integer> data = new ArrayList<Integer>();
+        for (int i = 0; i < 52; ++i) {
+            data.add(i);
+        }
+
+        while (data.size() > 0) {
+            Random rand = new Random();
+            this.getWest().getQuanbai().add(data.remove(Math.abs(rand.nextInt()) % data.size()));
+            this.getNorth().getQuanbai().add(data.remove(Math.abs(rand.nextInt()) % data.size()));
+            this.getEast().getQuanbai().add(data.remove(Math.abs(rand.nextInt()) % data.size()));
+            this.getYou().getQuanbai().add(data.remove(Math.abs(rand.nextInt()) % data.size()));
+        }
     }
 
     protected void setBanChoi() {
         //sets panel in center
         mainPanel.setBackground(this.bgColor);
-        
-        memA = new JLabel("Y");
-        memA.setBounds((Global.Width / 2) - 40,
+
+        this.getWest().name = new JLabel("You");
+        this.getWest().name.setBounds((Global.Width / 2) - 40,
                 this.getHeight() - 110, 100, 50);
-        memA.setForeground(Color.white);
+        this.getWest().name.setForeground(Color.white);
 
-        memB = new JLabel("West");
-        memB.setBounds(20, 110, 100, 50);
-        memB.setForeground(Color.white);
-        memC = new JLabel("North");
-        memC.setBounds(400, 1, 100, 30);
-        memC.setForeground(Color.white);
-        memD = new JLabel("East");
-        memD.setBounds(this.getWidth() - 100, 110, 100, 50);
-        memD.setForeground(Color.white);
+        this.getNorth().name = new JLabel("West");
+        this.getNorth().name.setBounds(20, 110, 100, 50);
+        this.getNorth().name.setForeground(Color.white);
+        this.getEast().name = new JLabel("North");
+        this.getEast().name.setBounds(400, 1, 100, 30);
+        this.getEast().name.setForeground(Color.white);
+        this.getYou().name = new JLabel("East");
+        this.getYou().name.setBounds(this.getWidth() - 100, 110, 100, 50);
+        this.getYou().name.setForeground(Color.white);
 
-        mainPanel.add(memA);
-        mainPanel.add(memB);
-        mainPanel.add(memC);
-        mainPanel.add(memD);
+        mainPanel.add(this.getWest().name);
+        mainPanel.add(this.getNorth().name);
+        mainPanel.add(this.getEast().name);
+        mainPanel.add(this.getYou().name);
+        //chia bài
+        chiaBai();
         //set card positions
         ArrayList<Integer> index;
         LaBai Temp;
@@ -66,19 +86,7 @@ public class BanChoi extends JFrame implements Observer, Runnable {
         y = Global.Height - 120 - Width;
         plus = -30;
         index = new ArrayList<Integer>();
-        index.add(0);
-        index.add(1);
-        index.add(2);
-        index.add(3);
-        index.add(4);
-        index.add(5);
-        index.add(6);
-        index.add(7);
-        index.add(8);
-        index.add(9);
-        index.add(10);
-        index.add(11);
-        index.add(12);
+        index  = this.getWest().getQuanbai();
         for (int i = 0; i < index.size(); ++i) {
             Temp = Global.laBai.get(index.get(i));
             Temp.setLocation(x, y);
@@ -94,19 +102,7 @@ public class BanChoi extends JFrame implements Observer, Runnable {
         y = 150;
         plus = 20;
         index.clear();
-        index.add(13);
-        index.add(14);
-        index.add(15);
-        index.add(16);
-        index.add(17);
-        index.add(18);
-        index.add(19);
-        index.add(20);
-        index.add(21);
-        index.add(22);
-        index.add(23);
-        index.add(24);
-        index.add(25);
+        index = this.getNorth().getQuanbai();
         for (int i = 0; i < index.size(); ++i) {
             Temp = Global.laBai.get(index.get(i));
             Temp.setLocation(x, y);
@@ -122,19 +118,7 @@ public class BanChoi extends JFrame implements Observer, Runnable {
         y = 30;
         plus = -30;
         index.clear();
-        index.add(26);
-        index.add(27);
-        index.add(28);
-        index.add(29);
-        index.add(30);
-        index.add(31);
-        index.add(32);
-        index.add(33);
-        index.add(34);
-        index.add(35);
-        index.add(36);
-        index.add(37);
-        index.add(38);
+        index = this.getEast().getQuanbai();
         for (int i = 0; i < index.size(); ++i) {
             Temp = Global.laBai.get(index.get(i));
             Temp.setLocation(x, y);
@@ -150,19 +134,7 @@ public class BanChoi extends JFrame implements Observer, Runnable {
         y = 150;
         plus = 20;
         index.clear();
-        index.add(39);
-        index.add(40);
-        index.add(41);
-        index.add(42);
-        index.add(43);
-        index.add(44);
-        index.add(45);
-        index.add(46);
-        index.add(47);
-        index.add(48);
-        index.add(49);
-        index.add(50);
-        index.add(51);
+        index = this.getYou().getQuanbai();
         for (int i = 0; i < index.size(); ++i) {
             Temp = Global.laBai.get(index.get(i));
             Temp.setLocation(x, y);
@@ -246,5 +218,61 @@ public class BanChoi extends JFrame implements Observer, Runnable {
     @Override
     public void run() {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    /**
+     * @return the west
+     */
+    public NguoiChoi getWest() {
+        return west;
+    }
+
+    /**
+     * @param west the west to set
+     */
+    public void setWest(NguoiChoi west) {
+        this.west = west;
+    }
+
+    /**
+     * @return the north
+     */
+    public NguoiChoi getNorth() {
+        return north;
+    }
+
+    /**
+     * @param north the north to set
+     */
+    public void setNorth(NguoiChoi north) {
+        this.north = north;
+    }
+
+    /**
+     * @return the east
+     */
+    public NguoiChoi getEast() {
+        return east;
+    }
+
+    /**
+     * @param east the east to set
+     */
+    public void setEast(NguoiChoi east) {
+        this.east = east;
+    }
+
+    /**
+     * @return the you
+     */
+    public NguoiChoi getYou() {
+        return you;
+    }
+
+    /**
+     * @param you the you to set
+     */
+    public void setYou(NguoiChoi you) {
+        this.you = you;
     }
 }
