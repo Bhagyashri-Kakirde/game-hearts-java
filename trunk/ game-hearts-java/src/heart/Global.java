@@ -23,6 +23,7 @@ public class Global {
     public static int K = 13;
     public static int A = 14;
     public static ArrayList<LaBai> laBai = new ArrayList<LaBai>();
+    public static ArrayList<Integer> Bobai = new ArrayList<Integer>();
 
     public static void createLabai() {
         String s = "pictures/";
